@@ -17,16 +17,19 @@ namespace Stripe.Api.Services
                     new SessionLineItemOptions
                     {
                         Amount = Convert.ToInt64(paymentDetails.Amount) * 100,
-                        Name = "Walk out Malaria"
+                        Name = "Walk out Malaria",
+                        Currency = paymentDetails.Currency,
+                        Quantity = 1,
                     }
                 },
                 Mode = "payment",
                 CustomerEmail = paymentDetails.Email,
+                SuccessUrl = "http://localhost:3000",
+                CancelUrl = "http://localhost:3000/cancel"
                 
             };
             var service = new SessionService();
             Session session = service.Create(options);
-            session.Currency = paymentDetails.Currency;
             return session;
         }
 
